@@ -1,0 +1,22 @@
+
+
+
+    <dialog
+  #dialogRef
+  class="rounded-xl p-6 w-[400px] max-w-[90%] backdrop:bg-black/50 relative"
+>
+@if(isOpen()){
+  <button
+    (click)="close()"
+    class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl cursor-pointer"
+  >
+    ✕
+  </button>
+
+  <!-- Projected content (like a form or text) -->
+
+       <ng-content></ng-content>
+   
+    }
+</dialog>
+

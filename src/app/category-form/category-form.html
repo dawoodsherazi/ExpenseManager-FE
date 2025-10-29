@@ -1,0 +1,44 @@
+<div>
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmitCategory()">
+    <h5 class="font-bold">{{ isEditMode() ? 'Edit Category' : 'Add New Category' }}</h5>
+    <br />
+    <input
+      class="border rounded p-2 mb-2 w-full"
+      type="text"
+      formControlName="name"
+      placeholder="Category Name"
+      required
+    /><br />
+    <button class="bg-blue-600 p-2 cursor-pointer mt-2 rounded w-full" type="submit">
+      {{ isEditMode() ? 'Update Category' : 'Add Category' }}
+    </button>
+  </form>
+
+  <!-- category List -->
+
+  <div>
+    @for (category of categories(); track category.id) {
+    <div class="border border-gray-300 mt-3 rounded-xl p-4 w-80 bg-white shadow-sm">
+      <div class="flex justify-between items-center">
+        <div class="mt-2">
+          <span class="p-1 bg-purple-200 text-purple-800 rounded">{{ category.name }}</span>
+        </div>
+        <div>
+          <i
+            class="fas fa-edit ml-20 cursor-pointer"
+            style="color: rgb(161, 175, 36)"
+            (click)="onEditCategory(category)"
+          ></i>
+          <i
+            class="fa fa-trash ml-2 cursor-pointer"
+            aria-hidden="true"
+            style="color: red"
+            (click)="onDeleteCategory(category.id)"
+          ></i>
+        </div>
+      </div>
+    </div>
+
+    }
+  </div>
+</div>

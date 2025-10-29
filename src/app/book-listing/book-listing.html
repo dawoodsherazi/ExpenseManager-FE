@@ -1,0 +1,45 @@
+<div class="flex justify-center items-center flex-col gap-3 mt-5 ">
+  <h2 class="font-bold text-3xl mb-2">Your Books</h2>
+
+  @for (book of books(); track book.id) {
+    <div class="relative flex justify-between items-center border border-gray-300 mt-3 rounded-xl p-4 w-80 bg-white shadow-sm">
+      <h3 class="font-bold cursor-pointer" [routerLink]="['/transactions', book.id]">{{ book.title }}</h3>
+
+      <!-- Three Dots Icon -->
+      <div class="relative">
+        <i
+          class="fa-solid fa-ellipsis-vertical text-gray-700 text-xl cursor-pointer"
+          (click)="onClickMenu(book.id)"
+        ></i>
+
+        <!-- Dropdown Menu -->
+        @if (openMenuId() === book.id) {
+          <div
+            class="absolute right-0 top-6 bg-white border border-gray-200 rounded-xl shadow-lg w-32 z-10"
+          >
+            <ul class="p-2">
+              <li class="p-2 hover:bg-gray-100 cursor-pointer" (click)="onRenameBook(book)">Rename</li>
+              <li class="p-2 hover:bg-gray-100 cursor-pointer" (click)="deleteBook(book.id)">Delete</li>
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+
+
+
+
+
+<app-dialog-model #dialogRef>
+  <div class=" card border ml-3 p-5 mt-5 w-80 rounded-xl shadow-sm">
+    <form [formGroup]="bookForm" (ngSubmit)="isEditMode() ? updateBook(bookForm.value) : createBook()">
+
+        <h5 class="font-bold">{{ isEditMode() ? 'Edit Book' : 'Create New Book' }}</h5><br>
+        <input class=" border  rounded p-2" type="text" formControlName="title" placeholder="Book Title" required /><br>
+        <button class="bg-green-600 p-2 cursor-pointer mt-2 rounded " type="submit"> {{ isEditMode() ? 'Update Book' : 'Create Book' }}</button>
+    </form>
+</div>
+</app-dialog-model>

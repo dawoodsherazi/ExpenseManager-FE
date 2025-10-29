@@ -1,0 +1,21 @@
+<div>
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmitTransaction()">
+        <h5 class="font-bold">{{isEditMode() ? 'Edit Transaction' : 'Add New Transaction'}}</h5><br>
+        <input class=" border  rounded p-2 mb-2 w-full" type="text" formControlName="title" placeholder="Transaction Title" required /><br>
+        <input class=" border  rounded p-2 mb-2 w-full" type="number" formControlName="amount" placeholder="Amount" required /><br>
+        
+        <select class=" border  rounded p-2 mb-2 w-full" formControlName="categoryId" required>
+            <option value="" disabled selected>Select Category</option>
+            @for (category of categories(); track category.id) {
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            }
+        </select>
+        <select class=" border  rounded p-2 mb-2 w-full" formControlName="type" required>
+            <option value="" disabled selected>Select Transaction Type</option>
+            <option value="CashIn">CashIn</option>
+            <option value="CashOut">CashOut</option>
+        </select><br>
+        <button class="bg-blue-600 p-2 cursor-pointer mt-2 rounded w-full" type="submit"> {{isEditMode() ? 'Update Transaction' : 'Add Transaction'}}</button>
+
+    </form>
+</div>

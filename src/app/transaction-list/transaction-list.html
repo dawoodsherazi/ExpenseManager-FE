@@ -1,0 +1,71 @@
+<div class="flex  flex-col items-center">
+  <div>
+    <h1 class="font-bold text-green-600 my-5 ">List of Transactions</h1>
+    <button class="bg-blue-600 text-gray-200 p-2 cursor-pointer mt-2 rounded" (click)="openDialog('transaction')">
+      Add Transaction
+    </button>
+    <button class="bg-blue-600 text-gray-200 p-2 ml-4 cursor-pointer mt-2 rounded" (click)="openDialog('category')">
+      Add Category
+    </button>
+  </div>
+  <div>
+    @for (transaction of transactions(); track transaction.id) {
+    <div class="border border-gray-300 mt-3 rounded-xl p-4 w-80 bg-white shadow-sm">
+      <div class="flex justify-between items-center">
+        <div class="mt-2">
+          <span class="p-1 bg-purple-200 text-purple-800 rounded">{{
+            transaction.category.name
+          }}</span>
+          <i
+            class="fas fa-edit ml-20 cursor-pointer"
+            style="color: rgb(161, 175, 36)"
+            (click)="onEditTransaction(transaction)"
+          ></i>
+          <i
+            class="fa fa-trash ml-2 cursor-pointer"
+            aria-hidden="true"
+            style="color: red"
+            (click)="onDeleteTransaction(transaction.id)"
+          ></i>
+
+          <br />
+          <span class="transaction-title">{{ transaction.title }}</span>
+        </div>
+        <span
+          class="transaction-amount font-bold"
+          [ngClass]="{
+            'text-green-600': transaction.type == 'CashIn',
+            'text-red-600': transaction.type == 'CashOut'
+          }"
+          >{{ transaction.amount }}</span
+        >
+      </div>
+
+      <hr />
+      <span>
+        {{ transaction.date | date : 'fullDate' }}
+      </span>
+    </div>
+
+    }
+  </div>
+</div>
+
+@if(isDialogOpen()) {
+
+<app-dialog-model (dialogClosed)="dialogClosed()" #dialogRef>
+  @if(isCategoryFormOpen()){
+  <app-category-form
+    (formSubmitted)="isCategoryFormSubmitted()"
+    [categoryData]="selectedCategory"
+  ></app-category-form>
+  }@else {
+  <app-transaction-form
+    (formSubmitted)="isFormSubmitted()"
+    [transactionData]="selectedTransaction"
+  ></app-transaction-form>
+
+  }
+</app-dialog-model>
+
+}
